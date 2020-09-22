@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}">
+
+<body>
+<!-- Aside -->
+<th:block th:fragment="sidebar">
+    <aside class="navbar navbar-expand-md">
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav nav flex-column">
+                <li class="first-list-item nav-item menu-item active">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-analytics fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.dashboard}">Dashbaord</span>
+                    </a>
+                </li>
+
+                <li  data-toggle="collapse" data-target="#activities" class="collapsed nav-item menu-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-tasks fa-fw fa-lg"></i>
+                        <span class="menu-text activities" th:text="#{ui.dashboard.menu.item.text.activities}">Activities</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu collapse" id="activities">
+                        <li class="active sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.activities}">Activities</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.actions}">Actions</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.action_plans}">Action Plans</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li data-toggle="collapse" data-target="#budgets" class="collapsed nav-item menu-item">
+                    <a href="# " class="nav-link">
+                        <i class="fas fa-money-bill-alt fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.budgets}">Budgets</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu collapse" id="budgets">
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.budgets}">Budgets</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.disbursements}">Decaissements</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.settlements}">Reglements</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.liabilities}">Engagements</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li data-toggle="collapse" data-target="#orders" class="collapsed nav-item menu-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-receipt  fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.orders}">Orders</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu collapse" id="orders">
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.procurements}">Procurements</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.contracts}">Contracts</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.invoices}">Invoices</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li data-toggle="collapse" data-target="#stakeholders" class="collapsed nav-item menu-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-hands-helping fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.stakeholders}">Stakeholders</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu collapse" id="stakeholders">
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.suppliers}">Suppliers</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.beneficiaries}">Beneficiaries</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.supervisors}">Supervisor</a></li>
+                    </ul>
+                </li>
+
+
+                <li data-toggle="collapse" data-target="#indicators" class="collapsed nav-item menu-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-tachometer-alt fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.indicators}">Indicators</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu collapse" id="indicators">
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.indicator_of_results}">Indicator of Results</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.indicator_of_impact}">Indicator of Impacts</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.indicator_of_evaluation}">Indicator of Evaluation</a></li>
+                    </ul>
+                </li>
+
+                <li data-toggle="collapse" data-target="#messages" class="nav-item menu-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-envelope fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.messages}">Messages</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu collapse" id="messages">
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.inbox}">Inbox</a></li>
+                        <li class="sub-menu-item"><a href="#" th:text="#{ui.dashboard.menu.item.submenu.text.sent}">Sent</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item menu-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-bell fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.notifications}">Notifications</span>
+                        <span class="badge rounded bg-white float-right">3</span>
+                    </a>
+                </li>
+
+                <li class="nav-item menu-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-question-circle fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.help}">Help</span>
+                    </a>
+                </li>
+
+                <li class="nav-item menu-item">
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-cog fa-fw fa-lg"></i>
+                        <span class="menu-text" th:text="#{ui.dashboard.menu.item.text.settings}">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+</th:block>
+</body>
+</html>

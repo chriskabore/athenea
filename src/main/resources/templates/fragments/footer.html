@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}">
+    <body>
+        <th:block th:fragment="footer">
+            <hr class="footer-separator">
+            <footer class="footer">
+                <div class="col-12 my-auto">
+                    <p class="copyright float-md-right text-center my-auto" th:text="'&copy; '+${year}+'&nbsp;'+#{ui.footer.copyright.text}">&copy; &nbsp;Copyright BEOGOTECH SARL. All rights reserved.</p>
+                </div>
+            </footer>
+        </th:block>
+    </body>
 </html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+    <!-- Stylesheets -->
+    <th:block th:fragment="stylesheets">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{css/animate.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/fontawsome-pro/css/all.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/jquery-ui.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/jqtree.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/athenea.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/media-queries.css}"/>
+        <link rel="icon" sizes="256x256" th:sizes="256x256" th:href="@{/img/logo-athenea.ico}"/>
+    </th:block>
+    <title>Title</title>
+</head>
+<body>
+
+     <th:block th:fragment="action-plan-selector">
+         <div class="form-row action-plan-selector-row align-items-baseline mt-2">
+             <div class="col-md-4">
+                 <label class="selector-label" th:text="#{ui.dashboard.content.selector.label.text}">Choose an action plan</label>
+             </div>
+             <div class="col-md-8">
+                 <select name="action-plan-selector" class="action-plan-selector form-control">
+                     <option th:text="${actionPlanActiveOption}"></option>
+                     <option>option 2</option>
+                     <option>option 3</option>
+                     <option>option 4</option>
+                 </select>
+             </div>
+         </div>
+     </th:block>
+    <!-- Scripts -->
+    <th:block th:fragment="scripts">
+        <script type="text/javascript" th:src="@{/js/modernizr-3.8.0.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/jquery-3.5.1.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+        <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script type="text/javascript" th:src="@{/fontawsome-pro/js/all.js}" ></script>
+        <script type="text/javascript" th:src="@{/js/tree.jquery.js}"></script>
+        <script type="text/javascript" th:src="@{/js/athenea.js}"></script>
+    </th:block>
+    <th:block th:fragment="dashboard-script">
+        <script>
+            $(function() {
+                /** SIDE MENU **/
+
+                // prevent clicking on submenu items to close drop down
+                $(".sub-menu-item").click(function(e){
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if(!$(this).hasClass('active')){
+                        $(this).addClass('active');
+                        $('.sub-menu-item').not(this).filter('.active').removeClass('active');
+                    }
+                });
+
+                // active menu item
+                $(".menu-item").click(function(e){
+                    // check if there is another menu-item opened if yes close them
+                    let subMenus = $(".sub-menu").filter(".show");
+                    console.log(subMenus.length);
+
+                });
+                /* $('.menu-item').click(function (e) {
+                     if(!$(this).hasClass('active')){
+                         $('.menu-item').not(this).filter('.active').removeClass('active');
+                         $('.menu-item').not(this).addClass('collapsed');
+                         $(this).addClass('active');
+                     }
+
+                     if($(this).find('ul.sub-menu').length>0){
+                         $('[aria-expanded="true"]').not(this).attr('aria-expanded','false');
+                         $('.menu-item').not(this).children('.sub-menu.collapse.show').removeClass( "show", 400);
+                     }else{
+                         $('.menu-item').not(this).children('.sub-menu.collapse.show').removeClass( "show", 100);
+                     }
+                 });*/
+
+                // active sub-menu item
+                /*$('.sub-menu li').click(function (e) {
+                    $('.sub-menu li').not(this).filter('.active').removeClass('active');
+                    $(this).addClass('active');
+                });*/
+
+                /** ACTION PLAN TREE */
+
+                let actionPlanTreeDataURL="/action-plan-tree";
+
+                // ajax call to get tree data
+                $.ajax({
+                    url: actionPlanTreeDataURL,
+                    type:'GET',
+                    dataType:'json',
+                    success: function(response){
+                        let tree = [];
+                        tree.push(response);
+                        buildActionPlanTree(tree);
+                    }
+                });//end of ajax call
+
+                // adds border to tree items on click
+                $(document).on('click','.jqtree-element',function(){
+                    $('.jqtree-element').not($(this)).addClass('border');
+                    $(this).removeClass('border');
+                    $(this).css("border", "2px solid #2ca5d7");
+                });
+
+                $(document).on('mouseover','.jqtree-element',function(){
+                    $(this).removeClass('border');
+                    $(this).css("border", "1px solid #9160A6");
+                    if($(this).parent().hasClass('jqtree-selected')){
+                        $(this).css("border", "2px solid #9160A6");
+                    }
+
+                });
+
+                $(document).on('mouseleave','.jqtree-element',function(){
+                    $(this).addClass('border');
+                    if($(this).parent().hasClass('jqtree-selected')){
+                        $(this).removeClass('border');
+                        $(this).css("border", "2px solid #2ca5d7");
+                    }
+                });
+
+                $('.language-dropdown-item').click(function(){
+                    // switch flag and language texts
+                    let selectedFlagSrc = $(this).find('img').attr('src');
+                    let selectedFlagAlt = $(this).find('img').attr('alt');
+                    let selectLanguageText=$(this).find('span').text();
+                    let currentFlagSrc = $('#languages').find('img').attr('src');
+                    let currentFlagAlt = $('#languages').find('img').attr('alt');
+                    let currentLanguageText=$('#languages').find('span').text();
+                    $('#selected-language').find('img').attr('src',selectedFlagSrc);
+                    $('#selected-language').find('img').attr('alt',selectedFlagAlt);
+                    $('#selected-language').find('span').text(selectLanguageText);
+                    $(this).find('img').attr('src',currentFlagSrc);
+                    $(this).find('img').attr('alt',currentFlagAlt);
+                    $(this).find('span').text(currentLanguageText);
+
+                    let locale='fr';
+                    if(selectLanguageText=='English'|| selectLanguageText=='Anglais'){
+                        locale='en';
+                    }else if(selectLanguageText=='French'|| selectLanguageText=='Français'){
+                        locale='fr';
+                    }
+                    let currentUrl = window.location.href;
+                    let currentUrlSplits ="";
+                    let targetUrl ="";
+
+                    if(currentUrl.includes('?lang=')){
+                        currentUrlSplits = currentUrl.split("?lang=");
+                        targetUrl = currentUrlSplits[0]+'?lang=' + locale;
+                    }else if (currentUrl.endsWith("#")){
+                        currentUrlSplits= currentUrl.split("#");
+                        targetUrl = currentUrlSplits[0]+'?lang=' + locale;
+                    }else if(currentUrl.endsWith("")){
+                        targetUrl = currentUrl+'?lang=' + locale;
+                    }
+
+                    // window.location.replace(targetUrl);
+                    window.location=targetUrl;
+
+                });
+
+                $(document).ready(function(){
+
+                    let currentLocale = 'fr';
+
+                    let currentUrl = window.location.href;
+                    if(currentUrl !=undefined){
+
+                        if(currentUrl.includes("?lang=")){
+                            currentLocale = currentUrl.split("?lang=")[1];
+                        }
+                    }
+
+
+                    if(currentLocale=='en'){
+                        $('#selected-language').find('img').attr('src',"img/flags/GB.png");
+                        $('#selected-language').find('img').attr('alt',"English");
+                        $('#selected-language').find('span').text("English");
+
+                        $('.language-dropdown-item').find('img').attr('src',"img/flags/FR.png");
+                        $('.language-dropdown-item').find('img').attr('alt',"French");
+                        $('.language-dropdown-item').find('span').text("French");
+                    }else if(currentLocale=='fr'){
+                        $('#selected-language').find('img').attr('src',"img/flags/FR.png");
+                        $('#selected-language').find('img').attr('alt',"Français");
+                        $('#selected-language').find('span').text("Français");
+
+                        $('.language-dropdown-item').find('img').attr('src',"img/flags/GB.png");
+                        $('.language-dropdown-item').find('img').attr('alt',"Anglais");
+                        $('.language-dropdown-item').find('span').text("Anglais");
+
+                    }
+
+                });
+
+            });
+        </script>
+    </th:block>
+</body>
+</html>
