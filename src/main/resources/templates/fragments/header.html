@@ -164,5 +164,25 @@
 
             </header>
         </th:block>
+
+     <!--- login header -->
+     <th:block th:fragment="login-header">
+         <div class="row logo-image-row">
+             <div class="col-sm-6 col-md-6 col-lg-4 mx-auto">
+                 <!-- Logo container-->
+                 <div class="login-logo-container">
+                     <img th:src="@{/img/logo-athenea.png}" alt="athenea logo" class="logo-athenea img-fluid"/>
+                 </div>
+             </div>
+         </div>
+         <div class="row slogan-phrase-row">
+             <div class="col-sm-10 col-md-10 col-lg-10 col-xl-12 mx-auto">
+                 <!-- Phrase container -->
+                 <div class="phrase-container text-center">
+                     <p class="phrase" th:text="#{ui.login.phrase.text}">Manage your projects more easily and follow the progress of your action plans in real time.</p>
+                 </div>
+             </div>
+         </div>
+     </th:block>
     </body>
 </html>

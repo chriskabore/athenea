@@ -3,9 +3,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
-    <title>Home Page</title>
+    <title th:text="#{ui.page.dashboard.title}">Dashboard</title>
 </head>
 <body>
- <h1 layout:fragment="custom-content">home page</h1>
+ <div layout:fragment="content">
+     <th:block th:insert="fragments/dashboard::dashboard-panel"></th:block>
+ </div>
 </body>
 </html>

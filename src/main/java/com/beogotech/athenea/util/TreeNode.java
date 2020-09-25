@@ -1,4 +1,4 @@
-package com.beogotech.atheneaproject.utils;
+package com.beogotech.athenea.util;
 
 import java.util.ArrayList;
 import java.util.List;

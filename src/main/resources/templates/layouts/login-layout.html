@@ -6,23 +6,15 @@
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE"></title>
 </head>
 <body>
-<div class="page dashboard-page">
-    <div class="container-fluid wrapper">
+<div class="page login-page">
+    <div class="container">
         <!-- header -->
-        <th:block th:insert="fragments/dashboard-header::dashboard-header"></th:block>
-        <div class="content row">
-            <div class="col-md-2 sidebar-column">
-                <th:block th:insert="fragments/aside::sidebar"></th:block>
-            </div>
-            <div class="col-md-10 panel-column">
-                <!-- action plan selector -->
-                <th:block th:insert="fragments/general::action-plan-selector"></th:block>
-                <!-- content -->
-                <section class="row action-plan-panel">
-                    <div class="container-fluid">
+        <th:block th:insert="fragments/header::login-header"></th:block>
+        <div class="row login-card-row">
+            <div class="col-md-8 mx-auto my-4">
+                <div layout:fragment="content">
 
-                    </div>
-                </section>
+                </div>
             </div>
         </div>
     </div>
@@ -32,102 +24,49 @@
 <!-- scripts -->
 <th:block th:insert="fragments/general::scripts"></th:block>
 <script>
-    $(function() {
-        /** SIDE MENU **/
+    $(document).ready(function() {
 
-        // prevent clicking on submenu items to close drop down
-        $(".sub-menu-item").click(function(e){
+        // login form validation
+        $('#login-submit').click(function(e){
+            // prevent form submission
             e.preventDefault();
-            e.stopPropagation();
 
-            if(!$(this).hasClass('active')){
-                $(this).addClass('active');
-                $('.sub-menu-item').not(this).filter('.active').removeClass('active');
+            // Code to check login
+            var hasError = false;
+            var emailRegEx = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            var emailAddressVal = $('#email-address').val();
+            var passwordVal = $('#password').val();
+            if(emailAddressVal==''){
+                hasError=true;
+            }
+            if(!emailRegEx.test(emailAddressVal)){
+                hasError=true;
+            }
+            if(passwordVal=='' || passwordVal.length <4){
+                hasError=true;
+            }
+            // If fail
+            if(hasError==true){
+                $('.shakeable').removeClass('animated shake');
+                $('#email-address').addClass('is-invalid');
+                $('#password').addClass('is-invalid');
+                setTimeout(function()
+                {
+                    $('.shakeable').addClass('animated shake')
+                },1);
+                $('#validation-message').removeClass('d-none');
+                $('.form-control').on("focus",function(){
+                    $('#validation-message').addClass('d-none');
+                    $('#email-address').removeClass('is-invalid');
+                    $('#password').removeClass('is-invalid');
+                });
+                $('#email-address').val("");
+                $('#password').val("");
+            }else{
+                $("#login-submit").unbind('click').click();
             }
         });
 
-        // active menu item
-        $(".menu-item").click(function(e){
-            // check if there is another menu-item opened if yes close them
-            let subMenus = $(".sub-menu").filter(".show");
-            console.log(subMenus.length);
-
-        });
-
-        // language toggle
-        $('.language-dropdown-item').click(function(){
-            // switch flag and language texts
-            let selectedFlagSrc = $(this).find('img').attr('src');
-            let selectedFlagAlt = $(this).find('img').attr('alt');
-            let selectLanguageText=$(this).find('span').text();
-            let currentFlagSrc = $('#languages').find('img').attr('src');
-            let currentFlagAlt = $('#languages').find('img').attr('alt');
-            let currentLanguageText=$('#languages').find('span').text();
-            $('#selected-language').find('img').attr('src',selectedFlagSrc);
-            $('#selected-language').find('img').attr('alt',selectedFlagAlt);
-            $('#selected-language').find('span').text(selectLanguageText);
-            $(this).find('img').attr('src',currentFlagSrc);
-            $(this).find('img').attr('alt',currentFlagAlt);
-            $(this).find('span').text(currentLanguageText);
-
-            let locale='fr';
-            if(selectLanguageText=='English'|| selectLanguageText=='Anglais'){
-                locale='en';
-            }else if(selectLanguageText=='French'|| selectLanguageText=='Français'){
-                locale='fr';
-            }
-            let currentUrl = window.location.href;
-            let currentUrlSplits ="";
-            let targetUrl ="";
-
-            if(currentUrl.includes('?lang=')){
-                currentUrlSplits = currentUrl.split("?lang=");
-                targetUrl = currentUrlSplits[0]+'?lang=' + locale;
-            }else if (currentUrl.endsWith("#")){
-                currentUrlSplits= currentUrl.split("#");
-                targetUrl = currentUrlSplits[0]+'?lang=' + locale;
-            }else if(currentUrl.endsWith("")){
-                targetUrl = currentUrl+'?lang=' + locale;
-            }
-
-            // window.location.replace(targetUrl);
-            window.location=targetUrl;
-
-        });
-
-        $(document).ready(function(){
-
-            let currentLocale = 'fr';
-
-            let currentUrl = window.location.href;
-            if(currentUrl !=undefined){
-
-                if(currentUrl.includes("?lang=")){
-                    currentLocale = currentUrl.split("?lang=")[1];
-                }
-            }
-
-
-            if(currentLocale=='en'){
-                $('#selected-language').find('img').attr('src',"img/flags/GB.png");
-                $('#selected-language').find('img').attr('alt',"English");
-                $('#selected-language').find('span').text("English");
-
-                $('.language-dropdown-item').find('img').attr('src',"img/flags/FR.png");
-                $('.language-dropdown-item').find('img').attr('alt',"French");
-                $('.language-dropdown-item').find('span').text("French");
-            }else if(currentLocale=='fr'){
-                $('#selected-language').find('img').attr('src',"img/flags/FR.png");
-                $('#selected-language').find('img').attr('alt',"Français");
-                $('#selected-language').find('span').text("Français");
-
-                $('.language-dropdown-item').find('img').attr('src',"img/flags/GB.png");
-                $('.language-dropdown-item').find('img').attr('alt',"Anglais");
-                $('.language-dropdown-item').find('span').text("Anglais");
-
-            }
-
-        });
     });
 </script>
 </body>

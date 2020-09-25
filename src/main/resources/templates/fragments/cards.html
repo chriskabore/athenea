@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}">
+<body>
+    <!-- login card -->
+    <th:block th:fragment="login-card">
+        <div class="card login-card ">
+            <div class="card-header">
+                <p th:text="#{ui.login.signin.text}" class="sign-in-text">Sign in to your account</p>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/login}" method="post">
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger">
+                            Invalid username or password.
+                        </div>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <div class="alert alert-info">
+                            You have been logged out.
+                        </div>
+                    </div>
+                    <div id="validation-message" class="d-none alert alert-danger" th:text="#{ui.login.form.validation.message.invalid.input}">Invalid username or password.</div>
+                    <div class="input-group email-input-group shakeable">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user fa-lg"></i></span>
+                        </div>
+                        <input  id="email-address" type="text" name="email" class="form-control input_user" value="" autofocus="autofocus" th:placeholder="#{ui.login.form.placeholder.user_email}">
+                    </div>
+                    <div class="input-group  password-input-group shakeable">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-key fa-lg"></i></span>
+                        </div>
+                        <input id="password" type="password" name="password" class="form-control input_pass" value="" placeholder="password" th:placeholder="#{ui.login.form.placeholder.password}">
+                    </div>
+                    <div class="input-group justify-content-between">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="remember-me">
+                            <label for="remember-me" class="form-check-label" th:text="#{ui.login.form.label.remember_me}">Remember me</label>
+                            <span></span>
+                        </div>
+                        <div class="password-forgoten">
+                            <a href="/" th:href="@{/}" th:text="#{ui.login.form.label.password_forgotten}">Password forgotten?</a>
+                        </div>
+                    </div>
+                    <div class="form-group login-button-group">
+                        <div class="login-submit-container">
+                            <input type="submit"
+                                   name="login-submit"
+                                   id="login-submit"
+                                   class="form-control btn btn-primary"
+                                   th:value="#{ui.login.form.button.login}">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <span th:text="#{ui.login.noaccount.text}">Don't have an account?</span>&nbsp; <a class="signup-text" href="/" th:href="@{/}" th:text="#{ui.login.signup.text}">Sign up!</a>
+            </div>
+        </div>
+    </th:block>
+
+    <!-- registration card -->
+    <th:block th:fragment="registration-card"></th:block>
+
+</body>
+</html>

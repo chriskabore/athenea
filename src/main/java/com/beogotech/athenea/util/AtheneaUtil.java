@@ -29,7 +29,7 @@ public class AtheneaUtil {
 	
 	/** MVC REQUEST URIS  && URLS ***/
 	public static final String APP_ROOT_URI = "/";
-	public static final String LOGIN_PAGE_URI = "/login";
+	public static final String LOGIN_PAGE_URI = "content/login";
 	public static final String HOME_PAGE_URI = "/home";
 	public static final String INDEX_PAGE_URI = "/index";
 }

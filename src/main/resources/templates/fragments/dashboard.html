@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.language}" th:lang="${lang}">
+
+    <body>
+        <th:block th:fragment="dashboard-panel">
+            <div class="row d-flex">
+                <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card action-plan-tree-holder mt-3 mb-2 pl-2 pr-2 pt-2 pb-2">
+                        <h5 class="action-plan-synthesis-text" th:text="#{ui.dashboard.content.action.plan.text}">Synthesis</h5>
+                        <div id="action-plan-tree">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card action-plan-synthesis-holder mt-3 mb-2 px-2 py-2">
+                        <h5 class="action-plan-synthesis-text" th:text="#{ui.dashboard.content.action.plan.synthesis.text}">Synthesis</h5>
+                        <div class="container-fluid synthesis-container">
+                            <div class="row d-flex">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="card status-card budget-status-holder mt-3">
+                                        <div class="card-header d-flex justify-content-between">
+                                            <span class="budget-status-text status-card-title float-left h6 my-auto" th:text="#{ui.dashboard.content.budget.status.text}"></span>
+                                            <span class="card-icon float-right budget-icon my-auto">
+                                                                <i class="fas fa-money-bill-alt fa-fw fa-lg"></i>
+                                                            </span>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="budget-total p-2">
+                                                <span class="total-text float-left" th:text="#{ui.dashboard.content.action.plan.synthesis.budget.total.text}">Total Budget</span>
+                                                <span class="total float-right" th:text="${totalOfBudget}">35 000 000 000 FCFA</span>
+                                            </div>
+                                            <div class="flex-wrapper budget-pie-chart">
+                                                <div class="single-chart mx-auto" th:utext="${budgetSpentChart}"></div>
+
+                                            </div>
+                                            <div class="budget-pie-chart-details">
+                                                <div class="pie-charts-details-headings d-flex justify-content-between">
+                                                                   <span>
+                                                                        <i class="fas fa-circle fa-fw float-left my-auto budget-spent-bullet"></i>
+                                                                       <span class="budget-spent-heading float-left my-auto" th:text="#{ui.dashboard.content.budget.spent.text}"></span>
+                                                                    </span>
+                                                    <span>
+                                                                        <i class="fas fa-circle fa-fw my-auto budget-available-bullet"></i>
+                                                                        <span class="budget-available-heading float-right my-auto" th:text="#{ui.dashboard.content.budget.available.text}">Budget Available</span>
+                                                                    </span>
+                                                </div>
+                                                <div class="pie-chart-details-values d-flex justify-content-between">
+                                                                    <span class="budget-spent-value float-left" th:text="${budgetSpentValue}">
+
+                                                                </span>
+                                                    <span class="budget-available-value float-right" th:text="${budgetAvailableValue}">
+                                                                </span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="view-more-link" th:text="#{ui.view.more.text}">View more...</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="card status-card financial-implementation-rate-holder mt-3">
+                                        <div class="card-header d-flex justify-content-between">
+                                            <span class="financial-implementation-rate-text status-card-title float-left h6 my-auto" th:text="#{ui.dashboard.content.financial.implementation.rate.text}"></span>
+                                            <span class="card-icon float-right finance-icon my-auto">
+                                                             <i class="fas fa-coins fa-fw fa-lg"></i>
+                                                            </span>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="gauge-container">
+                                                <div class="financial-implementation-gauge">
+                                                    <div class="gauge-body">
+                                                        <div class="gauge-fill"></div>
+                                                        <div class="gauge-cover">50%</div>
+                                                    </div>
+                                                    <span class="gauge-label-min ml-2 gauge-label">0</span>
+                                                    <span class="gauge-label-max gauge-label float-right">100</span>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                /*<![CDATA[*/
+                                                const financialImplementationGaugeElement = document.querySelector(".financial-implementation-gauge");
+                                                var financialImplementationRate =[[${financialImplementationRate}]];
+
+                                                /*]]>*/
+                                            </script>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="view-more-link" th:text="#{ui.view.more.text}">View more...</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="card status-card progress-rate-holder mt-3">
+                                        <div class="card-header d-flex justify-content-between">
+                                            <span class="progress-rate-text status-card-title float-left h6 my-auto" th:text="#{ui.dashboard.content.progress.rate.text}"></span>
+                                            <span class="card-icon float-right progress-icon my-auto">
+                                                                <i class="fas fa-chart-line fa-fw fa-lg"></i>
+                                                            </span>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="gauge-container">
+                                                <div class="physical-implementation-gauge">
+                                                    <div class="gauge-body">
+                                                        <div class="gauge-fill"></div>
+                                                        <div class="gauge-cover">50%</div>
+                                                    </div>
+                                                    <span class="gauge-label-min ml-2 gauge-label">0</span>
+                                                    <span class="gauge-label-max gauge-label float-right">100</span>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                /*<![CDATA[*/
+                                                const physicalImplementationGaugeElement = document.querySelector(".physical-implementation-gauge");
+                                                var physicalImplementationRate =[[${physicalImplementationRate}]];
+                                                /*]]>*/
+                                            </script>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="#" class="view-more-link" th:text="#{ui.view.more.text}">View more...</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </body>
+</html>

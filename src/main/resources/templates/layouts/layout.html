@@ -9,7 +9,7 @@
     <div class="page dashboard-page">
         <div class="container-fluid wrapper">
             <!-- header -->
-            <th:block th:insert="fragments/dashboard-header::dashboard-header"></th:block>
+            <th:block th:insert="fragments/header::dashboard-header"></th:block>
             <div class="content row">
                 <div class="col-md-2 sidebar-column">
                     <th:block th:insert="fragments/aside::sidebar"></th:block>
@@ -20,7 +20,7 @@
                     <!-- content -->
                     <section class="row action-plan-panel">
                         <div class="container-fluid">
-                            <section layout:fragment="custom-content">
+                            <section layout:fragment="content">
                                 <p>Your page content goes here</p>
                             </section>
                         </div>
@@ -55,8 +55,67 @@
                 console.log(subMenus.length);
 
             });
+            /* $('.menu-item').click(function (e) {
+                 if(!$(this).hasClass('active')){
+                     $('.menu-item').not(this).filter('.active').removeClass('active');
+                     $('.menu-item').not(this).addClass('collapsed');
+                     $(this).addClass('active');
+                 }
 
-            // language toggle
+                 if($(this).find('ul.sub-menu').length>0){
+                     $('[aria-expanded="true"]').not(this).attr('aria-expanded','false');
+                     $('.menu-item').not(this).children('.sub-menu.collapse.show').removeClass( "show", 400);
+                 }else{
+                     $('.menu-item').not(this).children('.sub-menu.collapse.show').removeClass( "show", 100);
+                 }
+             });*/
+
+            // active sub-menu item
+            /*$('.sub-menu li').click(function (e) {
+                $('.sub-menu li').not(this).filter('.active').removeClass('active');
+                $(this).addClass('active');
+            });*/
+
+            /** ACTION PLAN TREE */
+
+            let actionPlanTreeDataURL="/action-plan-tree";
+
+            // ajax call to get tree data
+            $.ajax({
+                url: actionPlanTreeDataURL,
+                type:'GET',
+                dataType:'json',
+                success: function(response){
+                    let tree = [];
+                    tree.push(response);
+                    buildActionPlanTree(tree);
+                }
+            });//end of ajax call
+
+            // adds border to tree items on click
+            $(document).on('click','.jqtree-element',function(){
+                $('.jqtree-element').not($(this)).addClass('border');
+                $(this).removeClass('border');
+                $(this).css("border", "2px solid #2ca5d7");
+            });
+
+            $(document).on('mouseover','.jqtree-element',function(){
+                $(this).removeClass('border');
+                $(this).css("border", "1px solid #9160A6");
+                if($(this).parent().hasClass('jqtree-selected')){
+                    $(this).css("border", "2px solid #9160A6");
+                }
+
+            });
+
+            $(document).on('mouseleave','.jqtree-element',function(){
+                $(this).addClass('border');
+                if($(this).parent().hasClass('jqtree-selected')){
+                    $(this).removeClass('border');
+                    $(this).css("border", "2px solid #2ca5d7");
+                }
+            });
+
             $('.language-dropdown-item').click(function(){
                 // switch flag and language texts
                 let selectedFlagSrc = $(this).find('img').attr('src');
@@ -130,6 +189,7 @@
                 }
 
             });
+
         });
     </script>
 </body>
